@@ -1,0 +1,157 @@
+<%- include partials/header.ejs %>
+
+<body onload="connectToMetaMask()">
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/web3/1.2.7-rc.0/web3.min.js"></script>
+<div id="carouselExample" class="carousel slide">
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img src="https://as2.ftcdn.net/v2/jpg/07/13/36/77/1000_F_713367723_tpmIsmQ66c2OUMtY5Hj1bv1Y0r2e8QHJ.jpg" class="d-block w-100" alt="img1" style="width:100%; height:500px">
+    </div>
+    <div class="carousel-item">
+      <img src="https://as2.ftcdn.net/v2/jpg/04/85/52/77/1000_F_485527779_2XhuT9XUClLNwEalAPiONBxoWtqgZONN.jpg" class="d-block w-100" alt="img2" style="width:100%; height:500px">
+    </div>
+    <div class="carousel-item">
+      <img src="https://as2.ftcdn.net/v2/jpg/06/45/35/87/1000_F_645358788_Nr0bQp4DMUhVFFUkC5BTuy8b0pe3KtlH.jpg" class="d-block w-100" alt="img3" style="width:100%; height:500px">
+    </div>
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
+
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header">
+          Player Form
+        </div>
+        <div class="card-body">
+          <form>
+            <div class="form-group">
+              <label for="name">Name:</label>
+              <input type="text" class="form-control" id="name">
+            </div>
+            <div class="form-group">
+              <label for="run">Runs:</label>
+              <input type="text" class="form-control" id="run">
+            </div>
+            <div class="form-group">
+              <label for="wicket">Wickets:</label>
+              <input type="text" class="form-control" id="wicket">
+            </div>
+            <button type="submit" class="btn btn-primary" onclick="setPlayer()">Submit</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+
+<script>
+  let account;
+  const connectToMetaMask = async () => {
+      if(window.ethereum !== "undefined") {
+        const accounts = await ethereum.request({method: "eth_requestAccounts"});
+        account = accounts[0];
+        console.log(accounts);
+      }
+  }
+  const setPlayer = async () => {
+      const abi = [
+                          {
+                            "inputs": [
+                              {
+                                "internalType": "string",
+                                "name": "_name",
+                                "type": "string"
+                              }
+                            ],
+                            "name": "setPlayerName",
+                            "outputs": [],
+                            "stateMutability": "nonpayable",
+                            "type": "function"
+                          },
+                          {
+                            "inputs": [
+                              {
+                                "internalType": "int256",
+                                "name": "_run",
+                                "type": "int256"
+                              }
+                            ],
+                            "name": "setPlayerRuns",
+                            "outputs": [],
+                            "stateMutability": "nonpayable",
+                            "type": "function"
+                          },
+                          {
+                            "inputs": [
+                              {
+                                "internalType": "int256",
+                                "name": "_wickets",
+                                "type": "int256"
+                              }
+                            ],
+                            "name": "setPlayerWickets",
+                            "outputs": [],
+                            "stateMutability": "nonpayable",
+                            "type": "function"
+                          },
+                          {
+                            "inputs": [],
+                            "name": "getPlayerName",
+                            "outputs": [
+                              {
+                                "internalType": "string",
+                                "name": "",
+                                "type": "string"
+                              }
+                            ],
+                            "stateMutability": "view",
+                            "type": "function"
+                          },
+                          {
+                            "inputs": [],
+                            "name": "getPlayerRuns",
+                            "outputs": [
+                              {
+                                "internalType": "int256",
+                                "name": "",
+                                "type": "int256"
+                              }
+                            ],
+                            "stateMutability": "view",
+                            "type": "function"
+                          },
+                          {
+                            "inputs": [],
+                            "name": "getPlayerWickets",
+                            "outputs": [
+                              {
+                                "internalType": "int256",
+                                "name": "",
+                                "type": "int256"
+                              }
+                            ],
+                            "stateMutability": "view",
+                            "type": "function"
+                          }
+                        ];
+      const contractAddress = "0x57aa26d858dc6a42b66f79aa53aa73f74abbe5ee";
+      window.web3 = await new Web3(window.ethereum);
+      window.contract = await new window.web3.eth.Contract(abi, contractAddress);
+      window.contract.methods.setPlayerName(document.getElementById('name').value).send({ from: account });
+      // window.contract.methods.setPlayerRuns(document.getElementById('run').value).send({ from: account });
+      // window.contract.methods.setPlayerWickets(document.getElementById('wicket').value).send({ from: account });
+      console.log("End");
+  }
+</script>
+
+<%- include partials/footer.ejs %>
