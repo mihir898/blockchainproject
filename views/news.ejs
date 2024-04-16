@@ -1,0 +1,48 @@
+<%- include partials/header.ejs %>
+
+<div id="newsCard">
+
+</div>
+
+<script>
+
+const getCricNews = async () => {
+  // Function to display news in a readable format
+  function displayNews(news) {
+    let newsDisplay = '';
+      // Loop through each item in the data array
+    news.storyList.forEach(newsItem => {
+      // Concatenate each piece of news item with HTML markup and classes for styling
+      newsDisplay += `<div class="card justify-content-center" style="width: 18rem;">
+                          <div class="card-body">
+                            <h5 class="card-title">${newsItem.story.hline}</h5>
+                            <p class="card-text">${newsItem.story.intro}</p>
+                          </div>
+                        </div>`;
+    });
+    // Set the formatted data into the div
+    document.getElementById('newsCard').innerHTML = newsDisplay;
+  }
+
+  const url = 'https://crickbuzz-official-apis.p.rapidapi.com/news';
+  const options = {
+    method: 'GET',
+    headers: {
+      'X-RapidAPI-Key': 'fced7595b6msh9d919781a52afd5p1ecfdbjsnf569a8097eac',
+      'X-RapidAPI-Host': 'crickbuzz-official-apis.p.rapidapi.com'
+    }
+  };
+
+  try {
+    const response = await fetch(url, options);
+    const data = await response.json();
+    displayNews(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+getCricNews();
+
+</script>
+<%- include partials/footer.ejs %>
