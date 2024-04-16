@@ -57,13 +57,9 @@
     <span class="visually-hidden">Next</span>
   </button>
 </div>
-<div class="row" style="padding-top: 50px;">
-    <div class="col-md-5">
-        <button type="button" class="btn btn-primary" onclick="connectToMetaMask()">ConnectToMetaMask</button>
-    </div>
-    
-    <div class="col-md-5 justify-content-end">
-        <button type="button" class="btn btn-primary" onclick="connectContract()">ConnectToContract</button>
+<div class="row" style="padding-top: 50px; margin-left: 800px;">
+    <div class="col-md">
+        <button type="button" class="btn btn-primary" onclick="connectContract()" id="contractConnect">ConnectToContract</button>
     </div>
 </div>
 
@@ -88,7 +84,7 @@
                 <label for="soil">Soil moisture:</label>
                 <input type="text" class="form-control" id="soil">
               </div>
-              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#pitchModal" onclick="pitchInspector()">Inspect Pitch</button>
+              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#pitchModal" onclick="pitchInspector()" style="margin-top: 10px;">Inspect Pitch</button>
 
               <div class="modal fade" id="pitchModal" tabindex="-1" aria-labelledby="pitchModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered">
@@ -114,14 +110,6 @@
 </html>
 
 <script>
-    // let account;
-    // const connectToMetaMask = async () => {
-    //     if(window.ethereum !== "undefined") {
-    //       const accounts = await ethereum.request({method: "eth_requestAccounts"});
-    //       account = accounts[0];
-    //       console.log(accounts);
-    //     }
-    // }
   
     const connectContract = async () => {
       const abi = [
@@ -158,6 +146,7 @@
         const contractAddress = "0x4ec2723c2d312bf4a5d801d7f588ade60849a65e";
         window.web3 = await new Web3(window.ethereum);
         window.contract = await new window.web3.eth.Contract(abi, contractAddress);
+        document.getElementById('contractConnect').innerText = "Connected To Contract";
     }
   
     const pitchInspector = async () => {

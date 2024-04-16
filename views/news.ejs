@@ -1,6 +1,6 @@
 <%- include partials/header.ejs %>
 
-<div id="newsCard">
+<div id="newsCard" style="margin-left: 800px; margin-top: 10px;">
 
 </div>
 
@@ -13,7 +13,7 @@ const getCricNews = async () => {
       // Loop through each item in the data array
     news.storyList.forEach(newsItem => {
       // Concatenate each piece of news item with HTML markup and classes for styling
-      newsDisplay += `<div class="card justify-content-center" style="width: 18rem;">
+      newsDisplay += `<div class="card" style="width: 18rem; margin-top: 5px">
                           <div class="card-body">
                             <h5 class="card-title">${newsItem.story.hline}</h5>
                             <p class="card-text">${newsItem.story.intro}</p>
